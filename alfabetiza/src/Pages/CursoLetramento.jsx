@@ -317,13 +317,19 @@ function CursoLetramento() {
                 <h2 id="aula21">O que é um roteador/modem e para que ele serve?</h2>
                 <img className="info_basic" src={RouterImage} alt="Roteador de internet" />
                 <div>
+                    <p>
                     O roteador é um aparelho responsável por distribuir a conexão de internet para diferentes dispositivos, como computadores, celulares, tablets e televisões. Ele permite que vários aparelhos se conectem à internet ao mesmo tempo, principalmente por meio do Wi-Fi (internet sem fio).
                     <br />
                     O modem é o equipamento responsável por receber o sinal de internet fornecido pela operadora e disponibilizá-lo para a sua casa. Em muitos casos, modem e roteador estão juntos em um único aparelho, realizando as duas funções. É por meio desses equipamentos que conseguimos acessar sites, assistir a vídeos, enviar mensagens e utilizar diversos serviços da internet.
                     <br />
                     Como usar um roteador/modem?<br/>
                     Para utilizar um roteador/modem, primeiro ele precisa estar conectado à energia elétrica e ao cabo de internet fornecido pela operadora. Depois de ligado, aguarde alguns instantes até que as luzes indicadoras mostrem que a conexão está funcionando.
-                    <div>Para conectar um celular ou computador ao Wi-Fi, siga estes passos:<br /><br />
+                    </p>
+                    
+                    <div>
+                    <p>    
+                    Para conectar um celular ou computador ao Wi-Fi, siga estes passos:<br /><br />
+                    
                     1-Abra as configurações de Wi-Fi do seu dispositivo.<br/>
                     2-Procure pelo nome da sua rede de internet.<br/>
                     3-Selecione a rede desejada.<br/>
@@ -331,6 +337,7 @@ function CursoLetramento() {
                     5-Clique em Conectar e aguarde alguns instantes.<br/><br />
                     Se tudo estiver funcionando corretamente, seu dispositivo estará conectado à internet!<br />
                     Dica: procure deixar o roteador em um local aberto, elevado e sem muitos obstáculos ao redor, para ajudar a distribuir melhor o sinal Wi-Fi. Também evite compartilhar sua senha com desconhecidos e não aperte botões do aparelho sem saber para que servem.
+                    </p>
                     </div>
                 </div>          
             </div>
