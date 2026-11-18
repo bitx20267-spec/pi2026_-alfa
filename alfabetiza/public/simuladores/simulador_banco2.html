@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBank Ultra | Full Edition</title>
+    <style>
+        :root {
+            --primary: #820ad1;
+            --secondary: #11c76f;
+            --dark: #21132b;
+            --white: #ffffff;
+            --gray: #f0f1f5;
+            --danger: #ff4d4d;
+            --blue: #007aff;
+            --warning: #f39c12;
+            font-family: Inter, Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            padding: 2rem 1rem;
+            background: linear-gradient(145deg, #f8f3fc, #e9e5ef);
+            color: var(--dark);
+        }
+
+        button,
+        a {
+            font: inherit;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            overflow: hidden;
+            border: 1px solid rgba(47, 21, 60, 0.08);
+            border-radius: 28px;
+            background: var(--white);
+            box-shadow: 0 24px 60px rgba(48, 24, 61, 0.16);
+        }
+
+        .header {
+            padding: 1.5rem 1.5rem 3.5rem;
+            background: linear-gradient(135deg, #820ad1, #5f079a);
+            color: var(--white);
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 1.35rem;
+            white-space: nowrap;
+        }
+
+        .topbar h1 span {
+            font-weight: 400;
+        }
+
+        #sair,
+        .reset-button {
+            min-height: 44px;
+            padding: 0.65rem 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 12px;
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.14);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #sair:hover,
+        .reset-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .balance-card {
+            position: relative;
+            margin: -2rem 1.25rem 0;
+            padding: 1.5rem;
+            border: 1px solid #eee8f2;
+            border-radius: 22px;
+            background: var(--white);
+            box-shadow: 0 8px 24px rgba(48, 24, 61, 0.08);
+        }
+
+        .balance-label {
+            color: #625a68;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .balance-amount {
+            margin: 0.5rem 0;
+            color: var(--dark);
+            font-size: clamp(2rem, 8vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        #limiteDisplay {
+            color: #625a68;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            padding: 1.5rem 1.25rem;
+        }
+
+        .btn-action {
+            display: flex;
+            min-height: 6rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.75rem 0.35rem;
+            border: 1px solid #e8e2ed;
+            border-radius: 18px;
+            background: #faf8fc;
+            color: #35243e;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.25;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            border-color: #d8b8ec;
+            background: #f3e8fa;
+        }
+
+        .btn-action span {
+            font-size: 1.8rem;
+        }
+
+        .history {
+            max-height: 430px;
+            overflow-y: auto;
+            padding: 1.25rem 1.5rem 1.5rem;
+            border-top: 1px solid #eee8f2;
+            background: #fff;
+        }
+
+        .section-title {
+            margin: 0 0 1rem;
+            color: var(--dark);
+            font-size: 1.35rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.65rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-btn {
+            min-height: 42px;
+            padding: 0.55rem 1rem;
+            border: 1px solid #d9d3dd;
+            border-radius: 999px;
+            background: var(--white);
+            color: #453b4b;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .transaction {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eeeaf0;
+        }
+
+        .transaction.cancellable {
+            cursor: pointer;
+        }
+
+        .transaction.cancellable:hover {
+            background: #faf8fc;
+        }
+
+        .transaction-details {
+            min-width: 0;
+        }
+
+        .transaction-title {
+            color: #35243e;
+            font-size: 1rem;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .transaction-date {
+            margin: 0.25rem 0;
+            color: #625a68;
+            font-size: 0.9rem;
+        }
+
+        .transaction-hint {
+            margin-top: 0.25rem;
+            color: #a51f1f;
+            font-size: 0.85rem;
+        }
+
+        .transaction-amount {
+            flex-shrink: 0;
+            font-size: 1rem;
+            text-align: right;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-agendado { background: #fff3cd; color: #684b00; }
+        .badge-pago { background: #d4edda; color: #155724; }
+        .val-pos { color: #087a43; font-weight: 700; }
+        .val-neg { color: #bd2929; font-weight: 700; }
+        .val-wait { color: #0758a8; font-weight: 700; }
+
+        .empty-state {
+            margin: 1.5rem 0 0.5rem;
+            color: #625a68;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .pix-modal {
+            width: min(100% - 2rem, 480px);
+            max-height: min(90vh, 720px);
+            padding: 0;
+            overflow: auto;
+            border: 0;
+            border-radius: 24px;
+            color: var(--dark);
+            box-shadow: 0 24px 70px rgba(25, 12, 32, 0.35);
+        }
+
+        .pix-modal::backdrop {
+            background: rgba(25, 12, 32, 0.68);
+            backdrop-filter: blur(3px);
+        }
+
+        .pix-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(135deg, #820ad1, #5f079a);
+            color: var(--white);
+        }
+
+        .pix-modal-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        .pix-modal-header p {
+            margin: 0.35rem 0 0;
+            color: #f0defa;
+            font-size: 0.95rem;
+        }
+
+        .pix-close {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.14);
+            color: var(--white);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .pix-modal-content {
+            padding: 1.25rem 1.5rem 1.5rem;
+        }
+
+        .pix-notice {
+            margin: 0 0 1.1rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            background: #f3e8fa;
+            color: #4d1769;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .pix-progress {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .pix-progress span {
+            height: 6px;
+            flex: 1;
+            border-radius: 99px;
+            background: #e5dfea;
+        }
+
+        .pix-progress span.active {
+            background: var(--primary);
+        }
+
+        .pix-fields {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .pix-field {
+            display: grid;
+            gap: 0.4rem;
+            color: #35243e;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .pix-field[hidden] {
+            display: none;
+        }
+
+        .pix-field input,
+        .pix-field select {
+            width: 100%;
+            min-height: 48px;
+            padding: 0.7rem 0.8rem;
+            border: 1px solid #cfc6d6;
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--dark);
+            font: inherit;
+            font-size: 1rem;
+        }
+
+        .pix-field input[readonly] {
+            background: #f5f2f7;
+            color: #625a68;
+        }
+
+        .pix-field small {
+            color: #625a68;
+            font-size: 0.85rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .pix-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .pix-button {
+            flex: 1 1 auto;
+            min-height: 48px;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            background: var(--white);
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .pix-button-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .pix-button:hover {
+            filter: brightness(0.94);
+        }
+
+        .pix-button:disabled {
+            cursor: wait;
+            opacity: 0.65;
+        }
+
+        .pix-summary {
+            display: grid;
+            gap: 0.9rem;
+            margin: 0;
+        }
+
+        .pix-summary div {
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #eee8f2;
+        }
+
+        .pix-summary [hidden] {
+            display: none;
+        }
+
+        .pix-summary dt {
+            margin-bottom: 0.2rem;
+            color: #625a68;
+            font-size: 0.9rem;
+        }
+
+        .pix-summary dd {
+            margin: 0;
+            color: #35243e;
+            font-size: 1rem;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .pix-summary .pix-summary-amount {
+            color: var(--primary);
+            font-size: 1.35rem;
+        }
+
+        .qr-video {
+            display: block;
+            width: 100%;
+            min-height: 220px;
+            max-height: 55vh;
+            border-radius: 16px;
+            background: #21132b;
+            object-fit: cover;
+        }
+
+        .qr-status {
+            min-height: 3rem;
+            margin: 0.85rem 0 0;
+            color: #453b4b;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .loader {
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(25, 12, 32, 0.88);
+            color: var(--white);
+            font-size: 1.1rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #4f3b59;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        :focus-visible {
+            outline: 3px solid #f2b544;
+            outline-offset: 3px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background: var(--white);
+            }
+
+            .container {
+                min-height: 100vh;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .header {
+                padding: 1.25rem 1rem 3rem;
+            }
+
+            .topbar {
+                gap: 0.4rem;
+            }
+
+            .topbar h1 {
+                font-size: 1.1rem;
+            }
+
+            #sair,
+            .reset-button {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+
+            .balance-card {
+                margin-right: 1rem;
+                margin-left: 1rem;
+                padding: 1.25rem;
+            }
+
+            .actions-grid {
+                gap: 0.55rem;
+                padding: 1.25rem 1rem;
+            }
+
+            .btn-action {
+                min-height: 5.5rem;
+                font-size: 0.95rem;
+            }
+
+            .history {
+                padding-right: 1rem;
+                padding-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader" class="loader"><div class="spinner"></div><p id="loader-msg">Validando código...</p></div>
+
+<div class="container">
+    <div class="header">
+        <div class="topbar">
+            <a id="sair" href="/simuladores">Voltar</a>
+            <h1>DevBank <span>ULTRA</span></h1>
+            <button class="reset-button" onclick="reset()">Limpar</button>
+        </div>
+    </div>
+
+    <div class="balance-card">
+        <div class="balance-label">SALDO DISPONÍVEL</div>
+        <div class="balance-amount" id="saldoDisplay">R$ 0,00</div>
+        <div id="limiteDisplay">Limite PIX: R$ 1.000,00</div>
+    </div>
+
+    <div class="actions-grid">
+        <button class="btn-action" onclick="abrirPix(false)"><span>💎</span>PIX</button>
+        <button class="btn-action" onclick="abrirPix(true)"><span>📅</span>Agendar</button>
+        <button class="btn-action" onclick="pagarBoleto()"><span>📑</span>Boletos</button>
+        <button class="btn-action" onclick="pagarQRCode()"><span>📷</span>QR Code</button>
+        <button class="btn-action" onclick="operacao('deposito')"><span>💵</span>Depósito</button>
+        <button class="btn-action" onclick="operacao('saque')"><span>🏧</span>Saque</button>
+    </div>
+
+    <div class="history">
+        <h2 class="section-title">Extrato</h2>
+        <div class="filters">
+            <button class="filter-btn active" id="f-all" onclick="filtrar('todos')">Tudo</button>
+            <button class="filter-btn" id="f-sche" onclick="filtrar('agendado')">Agendados</button>
+        </div>
+        <div id="extratoLista"></div>
+    </div>
+
+    <dialog class="pix-modal" id="pixModal" aria-labelledby="pixModalTitle">
+        <div class="pix-modal-header">
+            <div>
+                <h2 id="pixModalTitle">Enviar Pix</h2>
+                <p id="pixStepLabel">Etapa 1 de 2: dados do destinatário</p>
+            </div>
+            <button class="pix-close" type="button" aria-label="Fechar" onclick="fecharPix()">×</button>
+        </div>
+        <div class="pix-modal-content">
+            <p class="pix-notice">
+                Simulação educativa: os dados abaixo são fictícios e nenhuma transferência real será feita.
+            </p>
+            <div class="pix-progress" aria-hidden="true">
+                <span id="pixProgress1" class="active"></span>
+                <span id="pixProgress2"></span>
+            </div>
+
+            <section id="pixRecipientStep" aria-labelledby="pixRecipientTitle">
+                <h3 id="pixRecipientTitle">Para quem você vai transferir?</h3>
+                <div class="pix-fields">
+                    <label class="pix-field" for="pixKeyType">
+                        Tipo de chave
+                        <select id="pixKeyType" onchange="atualizarTipoChave()">
+                            <option value="E-mail">E-mail</option>
+                            <option value="Celular">Celular</option>
+                            <option value="CPF">CPF</option>
+                        </select>
+                    </label>
+                    <label class="pix-field" for="pixKey">
+                        Chave Pix
+                        <input id="pixKey" type="email" value="marina.oliveira@example.invalid" required autocomplete="off">
+                        <small>Exemplo fictício com domínio reservado para testes.</small>
+                    </label>
+                    <label class="pix-field" for="pixRecipientName">
+                        Nome identificado
+                        <input id="pixRecipientName" type="text" value="Marina Oliveira" readonly>
+                    </label>
+                    <label class="pix-field" for="pixBankName">
+                        Instituição
+                        <input id="pixBankName" type="text" value="Banco Escola Digital (fictício)" readonly>
+                    </label>
+                    <label class="pix-field" for="pixAmount">
+                        Valor
+                        <input id="pixAmount" type="number" min="0.01" step="0.01" value="125.50" required>
+                    </label>
+                    <label class="pix-field" for="pixDescription">
+                        Descrição (opcional)
+                        <input id="pixDescription" type="text" maxlength="70" value="Compra de material de estudo">
+                    </label>
+                    <label class="pix-field" id="pixScheduleDateField" for="pixScheduleDate" hidden>
+                        Data do agendamento
+                        <input id="pixScheduleDate" type="date" required>
+                    </label>
+                </div>
+                <div class="pix-actions">
+                    <button class="pix-button" type="button" onclick="fecharPix()">Cancelar</button>
+                    <button class="pix-button pix-button-primary" type="button" onclick="prepararPix()">Continuar</button>
+                </div>
+            </section>
+
+            <section id="pixReviewStep" aria-labelledby="pixReviewTitle" hidden>
+                <h3 id="pixReviewTitle">Confira os dados antes de confirmar</h3>
+                <dl class="pix-summary">
+                    <div><dt>Destinatário</dt><dd id="pixReviewRecipient"></dd></div>
+                    <div><dt>Instituição</dt><dd id="pixReviewBank"></dd></div>
+                    <div><dt>Chave Pix</dt><dd id="pixReviewKey"></dd></div>
+                    <div><dt>Descrição</dt><dd id="pixReviewDescription"></dd></div>
+                    <div id="pixReviewDateRow" hidden><dt>Data do agendamento</dt><dd id="pixReviewDate"></dd></div>
+                    <div><dt>Valor</dt><dd id="pixReviewAmount" class="pix-summary-amount"></dd></div>
+                </dl>
+                <div class="pix-actions">
+                    <button class="pix-button" type="button" onclick="voltarPix()">Voltar</button>
+                    <button class="pix-button pix-button-primary" id="pixConfirmButton" type="button" onclick="confirmarPix()">Confirmar Pix</button>
+                </div>
+            </section>
+        </div>
+    </dialog>
+
+    <dialog class="pix-modal" id="operationModal" aria-labelledby="operationTitle">
+        <div class="pix-modal-header">
+            <div>
+                <h2 id="operationTitle"></h2>
+                <p id="operationStepLabel">Etapa 1 de 2: informe os dados</p>
+            </div>
+            <button class="pix-close" type="button" aria-label="Fechar" onclick="fecharOperacao()">×</button>
+        </div>
+        <div class="pix-modal-content">
+            <p class="pix-notice">Ambiente de aprendizado. Os dados e operações são fictícios e não afetam uma conta real.</p>
+            <div class="pix-progress" aria-hidden="true">
+                <span id="operationProgress1" class="active"></span>
+                <span id="operationProgress2"></span>
+            </div>
+            <section id="operationEntryStep" aria-label="Dados da operação">
+                <div class="pix-fields" id="operationFields"></div>
+                <div class="pix-actions">
+                    <button class="pix-button" type="button" onclick="fecharOperacao()">Cancelar</button>
+                    <button class="pix-button pix-button-primary" type="button" onclick="prepararOperacao()">Continuar</button>
+                </div>
+            </section>
+            <section id="operationReviewStep" aria-labelledby="operationReviewTitle" hidden>
+                <h3 id="operationReviewTitle">Confira os dados antes de confirmar</h3>
+                <dl class="pix-summary" id="operationSummary">
+                    <div class="operation-summary-row"><dt></dt><dd></dd></div>
+                    <div class="operation-summary-row"><dt></dt><dd></dd></div>
+                    <div class="operation-summary-row"><dt></dt><dd></dd></div>
+                    <div class="operation-summary-row"><dt></dt><dd></dd></div>
+                </dl>
+                <div class="pix-actions">
+                    <button class="pix-button" type="button" onclick="voltarOperacao()">Voltar</button>
+                    <button class="pix-button pix-button-primary" id="operationConfirmButton" type="button" onclick="confirmarOperacao()">Confirmar</button>
+                </div>
+            </section>
+        </div>
+    </dialog>
+
+    <dialog class="pix-modal" id="qrModal" aria-labelledby="qrModalTitle">
+        <div class="pix-modal-header">
+            <div>
+                <h2 id="qrModalTitle">Ler QR Code</h2>
+                <p>Leitura de um código de demonstração</p>
+            </div>
+            <button class="pix-close" type="button" aria-label="Fechar câmera" onclick="fecharLeitorQr()">×</button>
+        </div>
+        <div class="pix-modal-content">
+            <p class="pix-notice">
+                Use um QR de treino no formato <strong>DEVPIX|Estabelecimento|valor</strong>, por exemplo
+                <code>DEVPIX|Mercado Escola|120.50</code>. Nenhum pagamento real será feito.
+            </p>
+            <video class="qr-video" id="qrVideo" autoplay muted playsinline aria-label="Prévia da câmera para leitura do QR Code"></video>
+            <p class="qr-status" id="qrStatus" role="status" aria-live="polite"></p>
+            <div class="pix-actions">
+                <button class="pix-button" type="button" onclick="iniciarCameraQr()">Tentar câmera</button>
+                <button class="pix-button pix-button-primary" type="button" onclick="usarExemploQr()">Usar exemplo fictício</button>
+            </div>
+        </div>
+    </dialog>
+</div>
+
+<script>
+    // Configurações e Estado
+    const LIMITE_DIARIO = 1000.00;
+    let filtroAtual = 'todos';
+    let agendarPixAtual = false;
+    let operacaoAtual = null;
+    let dadosOperacao = null;
+    let qrStream = null;
+    let qrDetector = null;
+    let qrFrameId = null;
+    let qrRequestId = 0;
+    let db = JSON.parse(localStorage.getItem('devbank_v3')) || {
+        saldo: 3200.00,
+        transacoes: [],
+        gastoHoje: 0,
+        dataReferencia: new Date().toLocaleDateString()
+    };
+
+    // Auto-reset de limite diário
+    if(db.dataReferencia !== new Date().toLocaleDateString()) {
+        db.gastoHoje = 0;
+        db.dataReferencia = new Date().toLocaleDateString();
+        save();
+    }
+
+    function save() {
+        localStorage.setItem('devbank_v3', JSON.stringify(db));
+        render();
+    }
+
+    function render() {
+        document.getElementById('saldoDisplay').innerText = db.saldo.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+        document.getElementById('limiteDisplay').innerText = `Limite PIX restante: ${(LIMITE_DIARIO - db.gastoHoje).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}`;
+
+        const lista = document.getElementById('extratoLista');
+        lista.innerHTML = '';
+
+        const transacoesFiltradas = db.transacoes
+            .map((transacao, indiceOriginal) => ({ transacao, indiceOriginal }))
+            .filter(({ transacao }) => filtroAtual !== 'agendado' || transacao.status === 'agendado');
+
+        if(transacoesFiltradas.length === 0) {
+            lista.innerHTML = '<p class="empty-state">Nenhuma movimentação encontrada.</p>';
+        }
+
+        transacoesFiltradas.slice().reverse().forEach(({ transacao: t, indiceOriginal: originalIndex }) => {
+            const isAgendado = t.status === 'agendado';
+            const corValor = isAgendado ? 'val-wait' : (t.tipo === 'deposito' ? 'val-pos' : 'val-neg');
+            const transaction = document.createElement('div');
+            transaction.className = isAgendado ? 'transaction cancellable' : 'transaction';
+
+            if(isAgendado) {
+                transaction.tabIndex = 0;
+                transaction.setAttribute('role', 'button');
+                transaction.addEventListener('click', () => cancelarAgendamento(originalIndex));
+                transaction.addEventListener('keydown', event => {
+                    if(event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        cancelarAgendamento(originalIndex);
+                    }
+                });
+            }
+
+            const details = document.createElement('div');
+            details.className = 'transaction-details';
+            const title = document.createElement('div');
+            title.className = 'transaction-title';
+            title.textContent = t.titulo;
+            const date = document.createElement('div');
+            date.className = 'transaction-date';
+            date.textContent = t.data;
+            const status = document.createElement('span');
+            status.className = `status-badge ${isAgendado ? 'badge-agendado' : 'badge-pago'}`;
+            status.textContent = t.status;
+            details.append(title, date, status);
+            if(isAgendado) {
+                const hint = document.createElement('div');
+                hint.className = 'transaction-hint';
+                hint.textContent = 'Toque para cancelar';
+                details.append(hint);
+            }
+
+            const amount = document.createElement('div');
+            amount.className = `transaction-amount ${corValor}`;
+            amount.textContent = `${isAgendado ? '' : (t.tipo === 'deposito' ? '+' : '-')} ${t.valor.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}`;
+            transaction.append(details, amount);
+            lista.append(transaction);
+        });
+    }
+
+    function formatarDataISO(data) {
+        const ano = data.getFullYear();
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const dia = String(data.getDate()).padStart(2, '0');
+        return `${ano}-${mes}-${dia}`;
+    }
+
+    function abrirPix(agendar = false) {
+        agendarPixAtual = agendar;
+        const hoje = new Date();
+        const dataMinima = formatarDataISO(hoje);
+        const dataInicial = new Date(hoje);
+        dataInicial.setDate(dataInicial.getDate() + 1);
+        document.getElementById('pixModalTitle').innerText = agendar ? 'Agendar Pix' : 'Enviar Pix';
+        document.getElementById('pixStepLabel').innerText = 'Etapa 1 de 2: dados do destinatário';
+        document.getElementById('pixConfirmButton').innerText = agendar ? 'Confirmar agendamento' : 'Confirmar Pix';
+        document.getElementById('pixKeyType').value = 'E-mail';
+        atualizarTipoChave();
+        document.getElementById('pixAmount').value = '125.50';
+        document.getElementById('pixDescription').value = 'Compra de material de estudo';
+        document.getElementById('pixScheduleDateField').hidden = !agendar;
+        document.getElementById('pixReviewDateRow').hidden = !agendar;
+        document.getElementById('pixScheduleDate').min = dataMinima;
+        document.getElementById('pixScheduleDate').value = formatarDataISO(dataInicial);
+        document.getElementById('pixRecipientStep').hidden = false;
+        document.getElementById('pixReviewStep').hidden = true;
+        document.getElementById('pixStepLabel').innerText = 'Etapa 1 de 2: dados do destinatário';
+        document.getElementById('pixProgress1').classList.add('active');
+        document.getElementById('pixProgress2').classList.remove('active');
+        document.getElementById('pixModal').showModal();
+    }
+
+    function atualizarTipoChave() {
+        const tipo = document.getElementById('pixKeyType').value;
+        const campoChave = document.getElementById('pixKey');
+        const exemplos = {
+            'E-mail': { type: 'email', value: 'marina.oliveira@example.invalid' },
+            'Celular': { type: 'tel', value: '+55 (00) 00000-0000' },
+            'CPF': { type: 'text', value: '000.000.000-00' }
+        };
+        campoChave.type = exemplos[tipo].type;
+        campoChave.value = exemplos[tipo].value;
+    }
+
+    function fecharPix() {
+        document.getElementById('pixModal').close();
+    }
+
+    function prepararPix() {
+        if(!document.getElementById('pixKey').reportValidity()) return;
+        if(!document.getElementById('pixAmount').reportValidity()) return;
+
+        const valor = Number(document.getElementById('pixAmount').value);
+        if(!validarValor(valor, !agendarPixAtual)) return;
+
+        const descricao = document.getElementById('pixDescription').value.trim();
+        document.getElementById('pixReviewRecipient').innerText = document.getElementById('pixRecipientName').value;
+        document.getElementById('pixReviewBank').innerText = document.getElementById('pixBankName').value;
+        document.getElementById('pixReviewKey').innerText = `${document.getElementById('pixKeyType').value}: ${document.getElementById('pixKey').value}`;
+        document.getElementById('pixReviewDescription').innerText = descricao || 'Sem descrição';
+        document.getElementById('pixReviewAmount').innerText = valor.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+        if(agendarPixAtual) {
+            const dataAgendamento = document.getElementById('pixScheduleDate');
+            if(!dataAgendamento.reportValidity()) return;
+            document.getElementById('pixReviewDate').innerText = dataAgendamento.value.split('-').reverse().join('/');
+        }
+        document.getElementById('pixRecipientStep').hidden = true;
+        document.getElementById('pixReviewStep').hidden = false;
+        document.getElementById('pixStepLabel').innerText = 'Etapa 2 de 2: revisão e confirmação';
+        document.getElementById('pixProgress2').classList.add('active');
+    }
+
+    function voltarPix() {
+        document.getElementById('pixRecipientStep').hidden = false;
+        document.getElementById('pixReviewStep').hidden = true;
+        document.getElementById('pixStepLabel').innerText = 'Etapa 1 de 2: dados do destinatário';
+        document.getElementById('pixProgress2').classList.remove('active');
+    }
+
+    async function confirmarPix() {
+        const agendar = agendarPixAtual;
+        const valor = Number(document.getElementById('pixAmount').value);
+        if(!validarValor(valor, !agendar)) {
+            voltarPix();
+            return;
+        }
+
+        const dataPix = agendar
+            ? document.getElementById('pixScheduleDate').value.split('-').reverse().join('/')
+            : new Date().toLocaleString('pt-BR');
+        const botaoConfirmacao = document.getElementById('pixConfirmButton');
+        botaoConfirmacao.disabled = true;
+        fecharPix();
+        await simularProcessamento(agendar ? 'Agendando Pix simulado...' : 'Confirmando Pix simulado...');
+        if(!agendar) {
+            db.saldo -= valor;
+            db.gastoHoje += valor;
+        }
+        db.transacoes.push({
+            titulo: `PIX para ${document.getElementById('pixRecipientName').value}`,
+            valor,
+            tipo: 'saida',
+            status: agendar ? 'agendado' : 'concluido',
+            data: dataPix
+        });
+        save();
+        botaoConfirmacao.disabled = false;
+        alert(agendar
+            ? 'Pix fictício agendado. Nenhum dinheiro real será transferido.'
+            : 'Pix simulado concluído. Nenhum dinheiro real foi transferido.');
+    }
+
+    function pagarBoleto() {
+        abrirOperacao('boleto');
+    }
+
+    function pagarQRCode() {
+        document.getElementById('qrModal').showModal();
+        iniciarCameraQr();
+    }
+
+    function cancelarAgendamento(index) {
+        if(confirm("Deseja cancelar este agendamento?")) {
+            db.transacoes.splice(index, 1);
+            save();
+            alert("Agendamento removido.");
+        }
+    }
+
+    // Utilitários
+    function validarValor(v, checarSaldo) {
+        if(!Number.isFinite(v) || v <= 0) { alert("Valor inválido"); return false; }
+        if(checarSaldo && v > db.saldo) { alert("Saldo insuficiente"); return false; }
+        if(checarSaldo && (db.gastoHoje + v) > LIMITE_DIARIO) { alert("Limite diário excedido!"); return false; }
+        return true;
+    }
+
+    function validarSaldo(v) {
+        if(!Number.isFinite(v) || v <= 0) { alert("Valor inválido"); return false; }
+        if(v > db.saldo) { alert("Saldo insuficiente"); return false; }
+        return true;
+    }
+
+    async function simularProcessamento(msg) {
+        const l = document.getElementById('loader');
+        document.getElementById('loader-msg').innerText = msg;
+        l.style.display = 'flex';
+        await new Promise(r => setTimeout(r, 1500));
+        l.style.display = 'none';
+    }
+
+    function filtrar(tipo) {
+        filtroAtual = tipo;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        if(tipo === 'todos') document.getElementById('f-all').classList.add('active');
+        else document.getElementById('f-sche').classList.add('active');
+        render();
+    }
+
+    function abrirOperacao(tipo, dadosQr = null) {
+        const titulos = {
+            boleto: 'Pagar boleto',
+            deposito: 'Fazer depósito',
+            saque: 'Fazer saque',
+            qrcode: 'Pagar com QR Code'
+        };
+        const campos = {
+            boleto: `
+                <label class="pix-field" for="operationBarcode">
+                    Código de barras
+                    <input id="operationBarcode" type="text" inputmode="numeric" minlength="47" maxlength="48" autocomplete="off" required>
+                    <small>Use o código fictício preenchido ou digite de 47 a 48 números.</small>
+                </label>
+                <label class="pix-field" for="operationBeneficiary">
+                    Beneficiário
+                    <input id="operationBeneficiary" type="text" value="Instituto Aprender (fictício)" readonly>
+                </label>
+                <label class="pix-field" for="operationAmount">
+                    Valor do boleto
+                    <input id="operationAmount" type="number" min="0.01" step="0.01" value="89.90" required>
+                </label>`,
+            deposito: `
+                <label class="pix-field" for="operationSource">
+                    Local do depósito
+                    <select id="operationSource">
+                        <option>Caixa eletrônico de treinamento</option>
+                        <option>Agência Escola (fictícia)</option>
+                    </select>
+                </label>
+                <label class="pix-field" for="operationAmount">
+                    Valor do depósito
+                    <input id="operationAmount" type="number" min="0.01" step="0.01" value="300.00" required>
+                </label>
+                <label class="pix-field" for="operationDescription">
+                    Observação (opcional)
+                    <input id="operationDescription" type="text" value="Depósito para exercício">
+                </label>`,
+            saque: `
+                <label class="pix-field" for="operationAccount">
+                    Conta
+                    <input id="operationAccount" type="text" value="Conta principal de treinamento" readonly>
+                </label>
+                <label class="pix-field" for="operationLocation">
+                    Local do saque
+                    <select id="operationLocation">
+                        <option>Caixa eletrônico de treinamento</option>
+                        <option>Agência Escola (fictícia)</option>
+                    </select>
+                </label>
+                <label class="pix-field" for="operationAmount">
+                    Valor do saque
+                    <input id="operationAmount" type="number" min="0.01" step="0.01" value="100.00" required>
+                </label>`,
+            qrcode: `
+                <label class="pix-field" for="operationMerchant">
+                    Estabelecimento
+                    <input id="operationMerchant" type="text" readonly>
+                </label>
+                <label class="pix-field" for="operationAmount">
+                    Valor identificado no QR
+                    <input id="operationAmount" type="number" min="0.01" step="0.01" readonly required>
+                    <small>O código precisa estar no formato de demonstração informado na tela da câmera.</small>
+                </label>`
+        };
+
+        if(!titulos[tipo]) throw new Error(`Tipo de operação desconhecido: ${tipo}`);
+        operacaoAtual = tipo;
+        dadosOperacao = null;
+        document.getElementById('operationTitle').innerText = titulos[tipo];
+        document.getElementById('operationStepLabel').innerText = 'Etapa 1 de 2: informe os dados';
+        document.getElementById('operationFields').innerHTML = campos[tipo];
+        if(tipo === 'boleto') document.getElementById('operationBarcode').value = '0'.repeat(47);
+        if(tipo === 'qrcode' && dadosQr) {
+            document.getElementById('operationMerchant').value = dadosQr.estabelecimento;
+            document.getElementById('operationAmount').value = dadosQr.valor.toFixed(2);
+        }
+        document.getElementById('operationEntryStep').hidden = false;
+        document.getElementById('operationReviewStep').hidden = true;
+        document.getElementById('operationProgress1').classList.add('active');
+        document.getElementById('operationProgress2').classList.remove('active');
+        document.getElementById('operationConfirmButton').disabled = false;
+        document.getElementById('operationModal').showModal();
+    }
+
+    function operacao(tipo) {
+        abrirOperacao(tipo);
+    }
+
+    function fecharOperacao() {
+        dadosOperacao = null;
+        document.getElementById('operationModal').close();
+    }
+
+    function prepararOperacao() {
+        const camposObrigatorios = document.querySelectorAll('#operationFields [required]');
+        for(const campo of camposObrigatorios) {
+            if(!campo.reportValidity()) return;
+        }
+
+        const valor = Number(document.getElementById('operationAmount').value);
+        let detalhes;
+        if(operacaoAtual === 'boleto') {
+            const codigo = document.getElementById('operationBarcode').value.trim();
+            if(!/^\d{47,48}$/.test(codigo)) {
+                alert('O código de treinamento deve conter 47 ou 48 números.');
+                return;
+            }
+            if(!validarSaldo(valor)) return;
+            detalhes = [
+                ['Beneficiário', document.getElementById('operationBeneficiary').value],
+                ['Código', `${codigo.length} dígitos de demonstração`],
+                ['Valor', valor.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})]
+            ];
+        } else if(operacaoAtual === 'deposito') {
+            if(!validarValor(valor, false)) return;
+            detalhes = [
+                ['Destino', 'Conta principal de treinamento'],
+                ['Local', document.getElementById('operationSource').value],
+                ['Observação', document.getElementById('operationDescription').value.trim() || 'Sem observação'],
+                ['Valor', valor.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})]
+            ];
+        } else if(operacaoAtual === 'saque') {
+            if(!validarSaldo(valor)) return;
+            detalhes = [
+                ['Conta', document.getElementById('operationAccount').value],
+                ['Local', document.getElementById('operationLocation').value],
+                ['Valor', valor.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})]
+            ];
+        } else {
+            if(!validarValor(valor, true)) return;
+            detalhes = [
+                ['Estabelecimento', document.getElementById('operationMerchant').value],
+                ['Origem', 'Conta principal de treinamento'],
+                ['Valor', valor.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})]
+            ];
+        }
+
+        dadosOperacao = {
+            tipo: operacaoAtual,
+            valor,
+            detalhes,
+            codigo: operacaoAtual === 'boleto' ? document.getElementById('operationBarcode').value.trim() : null,
+            estabelecimento: operacaoAtual === 'qrcode' ? document.getElementById('operationMerchant').value : null
+        };
+        const linhasResumo = document.querySelectorAll('.operation-summary-row');
+        linhasResumo.forEach((linha, indice) => {
+            const detalhe = detalhes[indice];
+            linha.hidden = !detalhe;
+            if(detalhe) {
+                linha.querySelector('dt').innerText = detalhe[0];
+                linha.querySelector('dd').innerText = detalhe[1];
+            }
+        });
+        document.getElementById('operationEntryStep').hidden = true;
+        document.getElementById('operationReviewStep').hidden = false;
+        document.getElementById('operationStepLabel').innerText = 'Etapa 2 de 2: revisão e confirmação';
+        document.getElementById('operationProgress2').classList.add('active');
+    }
+
+    function voltarOperacao() {
+        document.getElementById('operationEntryStep').hidden = false;
+        document.getElementById('operationReviewStep').hidden = true;
+        document.getElementById('operationStepLabel').innerText = 'Etapa 1 de 2: informe os dados';
+        document.getElementById('operationProgress2').classList.remove('active');
+    }
+
+    async function confirmarOperacao() {
+        if(!dadosOperacao) return;
+        const operacaoConfirmada = dadosOperacao;
+        if(operacaoConfirmada.tipo === 'boleto' || operacaoConfirmada.tipo === 'saque') {
+            if(!validarSaldo(operacaoConfirmada.valor)) {
+                voltarOperacao();
+                return;
+            }
+        } else if(operacaoConfirmada.tipo === 'qrcode' && !validarValor(operacaoConfirmada.valor, true)) {
+            voltarOperacao();
+            return;
+        }
+
+        const botaoConfirmacao = document.getElementById('operationConfirmButton');
+        botaoConfirmacao.disabled = true;
+        document.getElementById('operationModal').close();
+        await simularProcessamento('Processando operação de treinamento...');
+
+        if(operacaoConfirmada.tipo === 'deposito') {
+            db.saldo += operacaoConfirmada.valor;
+        } else {
+            db.saldo -= operacaoConfirmada.valor;
+        }
+        if(operacaoConfirmada.tipo === 'qrcode') db.gastoHoje += operacaoConfirmada.valor;
+
+        const titulos = {
+            boleto: 'Boleto para Instituto Aprender',
+            deposito: 'Depósito em dinheiro',
+            saque: 'Saque no caixa',
+            qrcode: `QR Code - ${operacaoConfirmada.estabelecimento}`
+        };
+        db.transacoes.push({
+            titulo: titulos[operacaoConfirmada.tipo],
+            valor: operacaoConfirmada.valor,
+            tipo: operacaoConfirmada.tipo === 'deposito' ? 'deposito' : 'saida',
+            status: 'concluido',
+            data: new Date().toLocaleString('pt-BR')
+        });
+        save();
+        dadosOperacao = null;
+        botaoConfirmacao.disabled = false;
+        alert('Operação simulada concluída. Nenhum dinheiro real foi movimentado.');
+    }
+
+    function usarExemploQr() {
+        pararCameraQr();
+        document.getElementById('qrModal').close();
+        abrirOperacao('qrcode', { estabelecimento: 'Mercado Escola (fictício)', valor: 120.50 });
+    }
+
+    function interpretarQrDemo(conteudo) {
+        const partes = conteudo.split('|');
+        if(partes.length !== 3 || partes[0] !== 'DEVPIX' || !/^\d+(?:\.\d{1,2})?$/.test(partes[2])) return null;
+
+        const estabelecimento = partes[1].trim();
+        const valor = Number(partes[2]);
+        if(!estabelecimento || estabelecimento.length > 80 || !Number.isFinite(valor) || valor <= 0) return null;
+        return { estabelecimento, valor };
+    }
+
+    async function iniciarCameraQr() {
+        pararCameraQr();
+        const requisicaoAtual = qrRequestId;
+        const status = document.getElementById('qrStatus');
+        const video = document.getElementById('qrVideo');
+        status.innerText = 'Solicitando acesso à câmera...';
+
+        if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            status.innerText = 'Este navegador não disponibiliza a câmera. Você ainda pode usar o exemplo fictício.';
+            return;
+        }
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: { ideal: 'environment' } },
+                audio: false
+            });
+            if(requisicaoAtual !== qrRequestId || !document.getElementById('qrModal').open) {
+                stream.getTracks().forEach(track => track.stop());
+                return;
+            }
+
+            qrStream = stream;
+            video.srcObject = stream;
+            await video.play();
+
+            if(typeof window.BarcodeDetector !== 'function') {
+                status.innerText = 'Câmera ativa. A leitura automática de QR não está disponível neste navegador; use o exemplo fictício.';
+                return;
+            }
+
+            try {
+                qrDetector = new window.BarcodeDetector({ formats: ['qr_code'] });
+                status.innerText = 'Aponte a câmera para um QR de treino no formato DEVPIX|Estabelecimento|valor.';
+                lerQrDaCamera(requisicaoAtual);
+            } catch(error) {
+                status.innerText = `A câmera abriu, mas o leitor QR não pôde iniciar: ${error.message}. Use o exemplo fictício.`;
+            }
+        } catch(error) {
+            if(requisicaoAtual !== qrRequestId) return;
+            pararCameraQr();
+            const mensagens = {
+                NotAllowedError: 'Acesso à câmera negado. Permita o uso da câmera ou utilize o exemplo fictício.',
+                NotFoundError: 'Nenhuma câmera foi encontrada. Você pode continuar com o exemplo fictício.',
+                NotReadableError: 'A câmera está sendo usada por outro aplicativo. Feche-o ou utilize o exemplo fictício.',
+                SecurityError: 'A câmera exige uma conexão segura (HTTPS ou localhost). Você pode usar o exemplo fictício.'
+            };
+            status.innerText = mensagens[error.name] || `Não foi possível abrir a câmera: ${error.message}. Use o exemplo fictício.`;
+        }
+    }
+
+    async function lerQrDaCamera(requisicaoAtual) {
+        if(requisicaoAtual !== qrRequestId || !qrDetector || !qrStream) return;
+        try {
+            const codigos = await qrDetector.detect(document.getElementById('qrVideo'));
+            if(requisicaoAtual !== qrRequestId || !qrStream) return;
+            if(codigos.length > 0) {
+                pararCameraQr();
+                const dados = interpretarQrDemo(codigos[0].rawValue);
+                if(!dados) {
+                    document.getElementById('qrStatus').innerText = 'O QR lido não é um código de treinamento reconhecido. Use um código DEVPIX de demonstração ou carregue o exemplo.';
+                    return;
+                }
+                document.getElementById('qrModal').close();
+                abrirOperacao('qrcode', dados);
+                return;
+            }
+        } catch(error) {
+            if(requisicaoAtual !== qrRequestId) return;
+            pararCameraQr();
+            document.getElementById('qrStatus').innerText = `Falha ao ler o QR Code: ${error.message}. Use o exemplo fictício.`;
+            return;
+        }
+        qrFrameId = requestAnimationFrame(() => lerQrDaCamera(requisicaoAtual));
+    }
+
+    function pararCameraQr() {
+        qrRequestId += 1;
+        if(qrFrameId !== null) cancelAnimationFrame(qrFrameId);
+        qrFrameId = null;
+        qrDetector = null;
+        if(qrStream) {
+            qrStream.getTracks().forEach(track => track.stop());
+            qrStream = null;
+        }
+        document.getElementById('qrVideo').srcObject = null;
+    }
+
+    function fecharLeitorQr() {
+        document.getElementById('qrModal').close();
+    }
+
+    function reset() { if(confirm("Apagar histórico e resetar saldo?")) { localStorage.clear(); location.reload(); } }
+
+    document.getElementById('qrModal').addEventListener('close', pararCameraQr);
+    render();
+</script>
+</body>
+</html>

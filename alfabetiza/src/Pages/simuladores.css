@@ -1,0 +1,130 @@
+.simuladores-page {
+    --simuladores-top: #177ea4;
+    --simuladores-bottom: #0f3f67;
+    --simuladores-panel: #f2eeee;
+    --simuladores-button: #469cb8;
+    --simuladores-button-hover: #173e56;
+    --simuladores-text: #ffffff;
+    min-height: 100vh;
+    padding: 6rem 1rem 2rem;
+    color: #000000;
+    background: linear-gradient(to bottom, var(--simuladores-top), var(--simuladores-bottom));
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.simuladores-header {
+    position: fixed;
+    z-index: 1;
+    inset: 0 0 auto;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--simuladores-panel);
+    background: var(--simuladores-bottom);
+    box-shadow: 0 0 15px var(--simuladores-text);
+    color: var(--simuladores-text);
+}
+
+.simuladores-nav {
+    display: flex;
+    width: min(100%, 900px);
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
+.simuladores-nav h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    letter-spacing: 0.08em;
+}
+
+.simuladores-nav img {
+    width: 1.75rem;
+    height: 1.75rem;
+}
+
+.simuladores-voltar {
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.75rem;
+    background: var(--simuladores-button-hover);
+    box-shadow: inset 4px 4px 6px var(--simuladores-button);
+    color: var(--simuladores-text);
+    text-decoration: none;
+}
+
+.simuladores-voltar:hover,
+.simuladores-voltar:focus-visible {
+    background: var(--simuladores-button);
+}
+
+.simuladores-main {
+    width: min(100%, 900px);
+    min-height: calc(100vh - 8rem);
+    margin: 0 auto;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border-radius: 1rem;
+    background: var(--simuladores-panel);
+}
+
+.simuladores-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.simuladores-card {
+    display: flex;
+    min-height: 6rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: var(--simuladores-button);
+    color: var(--simuladores-text);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.simuladores-card:hover,
+.simuladores-card:focus-visible {
+    transform: translateY(-2px);
+    background: var(--simuladores-button-hover);
+}
+
+.simuladores-instrucoes {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    line-height: 1.6;
+}
+
+.simuladores-instrucoes h2 {
+    color: var(--simuladores-button-hover);
+    font-size: 1.35rem;
+}
+
+.simuladores-instrucoes li + li {
+    margin-top: 0.75rem;
+}
+
+@media (max-width: 560px) {
+    .simuladores-page {
+        padding: 5rem 0.75rem 1rem;
+    }
+
+    .simuladores-nav h1 {
+        font-size: 1rem;
+    }
+
+    .simuladores-main {
+        min-height: calc(100vh - 6rem);
+        padding: 1.25rem;
+    }
+
+    .simuladores-cards {
+        grid-template-columns: 1fr;
+    }
+}

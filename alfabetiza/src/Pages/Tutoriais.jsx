@@ -1,0 +1,425 @@
+import './Curso.css';
+import { useEffect } from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { tutoriais } from './conteudos';
+
+const tutorialImages = import.meta.glob('../assets/Img_utoriais/**/*.{svg,png,jpg,jpeg,webp}', {
+    eager: true,
+    import: 'default',
+    query: '?url',
+});
+
+function TutorialImage({ path, alt }) {
+    const source = tutorialImages[`../assets/Img_utoriais/${path}`] || `/img/${path}`;
+
+    return <img className="tutorial-image" src={source} alt={alt} loading="lazy" />;
+}
+
+function Tutoriais() {
+    const { tutorialId } = useParams();
+    const tutorial = tutoriais[Number(tutorialId) - 1];
+
+    useEffect(() => {
+        if (!tutorial) {
+            return;
+        }
+
+        document.getElementById(`tutorial${tutorialId}`)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    }, [tutorial, tutorialId]);
+
+    if (!tutorial) {
+        return <Navigate to="/tutoriais" replace />;
+    }
+
+    return (
+        <div className="list-page">
+            <header className="list-header">
+                <Link to="/tutoriais" className="back-link">Voltar aos tutoriais</Link>
+                <h1>Tutoriais</h1>
+            </header>
+            <main className="list-main">
+                <section className="cards tutorial-content">
+            <article className="card">
+                <h3 id="tutorial1">Tutorial 1 — Como fazer uma chamada de vídeo pelo WhatsApp</h3>
+                <p> Objetivo: Ensinar a pessoa a ligar para familiares ou amigos por vídeo.</p>
+                <ul>
+                    <li>1. Abra o aplicativo WhatsApp no celular.
+                        <TutorialImage path="chamada_video/vidChamada1.svg" alt="" />
+                    </li>
+                    <li>2. Procure na lista de conversas a pessoa para quem deseja ligar.
+                        <TutorialImage path="chamada_video/vidChamada2.svg" alt="" />
+                        
+                    </li>
+                    <li>3. Toque no nome da pessoa para abrir a conversa.
+                        <TutorialImage path="chamada_video/vidChamada3.svg" alt="" />
+                    </li>
+                    <li>4. Na parte de cima da tela, procure o símbolo de uma câmera.
+                        <TutorialImage path="chamada_video/vidChamada4.svg" alt="" />
+                    </li>
+                    <li>5. Toque na câmera para iniciar a chamada de vídeo.
+                        <TutorialImage path="chamada_video/vidChamada5.svg" alt="" />
+                    </li>
+                    <li>6. Espere a pessoa atender.
+                        <TutorialImage path="chamada_video/vidChamada6.svg" alt="" />
+                    </li>
+                    <li>7. Para encerrar a chamada, toque no botão vermelho de desligar.
+                        <TutorialImage path="chamada_video/vidChamada7.svg" alt="" />
+                    </li>
+                </ul>
+                <h4>Dica: Se você não quiser aparecer na câmera, pode fazer uma chamada de voz tocando no símbolo de
+                    telefone.</h4>
+                    <ul>
+                    <li><TutorialImage path="chamada_video/vidChamada9.svg" alt="" /></li>
+                    <li><TutorialImage path="chamada_video/vidChamada10.svg" alt="" /></li>
+                    </ul>
+                
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial2">Tutorial 2 — Como fazer um pagamento usando Pix</h3>
+                <div> Objetivo: Ensinar como realizar um pagamento utilizando o Pix pelo aplicativo do banco.<br />
+                <ul>
+                    <li>1- Abra o aplicativo do seu banco.
+                        <TutorialImage path="pix/pix1.svg" alt="" />
+                    </li>
+                    <li>2- Entre na sua conta usando sua senha ou biometria.
+                        <TutorialImage path="pix/pix2.svg" alt="" />
+                    </li>
+                    <li>3- Procure pela opção "Pix".
+                        <TutorialImage path="pix/pix3.svg" alt="" />
+                    </li>
+                    <li>4- Escolha "Pagar" ou "Transferir".
+                        <TutorialImage path="pix/pix4.svg" alt="" />
+                    </li>
+                    <li>5- Digite a chave Pix da pessoa ou empresa que receberá o dinheiro.
+                        <TutorialImage path="pix/pix5.svg" alt="" />
+                    </li>
+                    <li>6- Confira com atenção o nome do destinatário e o valor.
+                        <TutorialImage path="pix/pix6.svg" alt="" />
+                    </li>
+                    <li>6- Se todas as informações estiverem corretas, confirme o pagamento.
+                        <TutorialImage path="pix/pix7.svg" alt="" />
+                    </li>
+                    <li>7- Digite sua senha ou utilize a biometria para finalizar.
+                        <TutorialImage path="pix/pix8.svg" alt="" />
+                    </li>
+                </ul>
+                <h4> Cuidado: Nunca informe sua senha bancária, código de confirmação ou código recebido por SMS para
+                    outra pessoa.
+                    Dica: Antes de confirmar qualquer Pix, sempre confira quem vai receber e quanto será pago.
+                </h4>
+
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial3">Tutorial 3 — Como pesquisar algo no Google pelo celular</h3>
+                <div> Objetivo: Ensinar a pesquisar informações importantes, como endereço, telefone, notícias, receitas
+                    ou horários. <br />
+                <ul>
+                    <li>1- Abra o aplicativo Google ou o navegador do celular.
+                    <TutorialImage path="pesquisa_google/pesquisa_google1.webp" alt="" />
+                    </li>
+                    <li>2- Toque na barra de pesquisa.
+                    <TutorialImage path="pesquisa_google/pesquisa_google2.webp" alt="" />
+                    </li>
+                    <li>3- Digite o que deseja descobrir.<br />
+                        Exemplo:"Qual é o horário do supermercado?"
+                    <TutorialImage path="pesquisa_google/pesquisa_google3.webp" alt="" />
+                    </li>
+                    <li>4- Toque no botão Pesquisar.
+                    <TutorialImage path="pesquisa_google/pesquisa_google4.webp" alt="" />
+                    </li>
+                    <li>5- Leia os resultados que aparecem na tela.
+                    <TutorialImage path="pesquisa_google/pesquisa_google5.webp" alt="" />
+                    </li>
+                    <li>6- Toque em um resultado para abrir a página.
+                    <TutorialImage path="pesquisa_google/pesquisa_google6.webp" alt="" />
+                    </li>
+                </ul>
+                <h4>Dica: Se tiver dificuldade para digitar, toque no símbolo do microfone e fale o que deseja
+                    pesquisar.</h4>
+                <TutorialImage path="pesquisa_google/pesquisa_google7.webp" alt="" />
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial4">Tutorial 4: Como criar uma senha segura</h3>
+                <div>Objetivo: Proteger contas e informações pessoais.<br />
+                <ul>
+                   <li>1. ​Escolha uma senha que seja difícil para outras pessoas descobrirem.
+                        <TutorialImage path="senha_segura/passosec1.webp" alt="" />
+                    </li>
+                    <li>2. Use letras, números e, quando possível, símbolos.
+                        <TutorialImage path="senha_segura/passosec2.webp" alt="" />
+                    </li>
+                    <li>3. Evite usar apenas 123456, sua data de nascimento ou seu nome.
+                        <TutorialImage path="senha_segura/passosec3.webp" alt="" />
+                    </li>
+                    <li>4. Não compartilhe sua senha com desconhecidos.
+                        <TutorialImage path="senha_segura/passosec4.webp" alt="" />
+                    </li>
+                    <li>5. Evite anotar a senha em locais públicos.
+                        <TutorialImage path="senha_segura/passosec5.webp" alt="" />
+                    </li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial5">Tutorial 5: Como pedir uma viagem pelo aplicativo</h3>
+                <div>Objetivo: Aprender a utilizar aplicativos de transporte.<br />
+                <ul>
+                    <li>1- ​Abra o aplicativo de transporte.
+                    <TutorialImage path="app_transport/app_transport1.webp" alt="" />
+                    </li>
+                    <li>2-​ Informe o local onde deseja ir.
+                    <TutorialImage path="app_transport/app_transport2.webp" alt="" />
+                    </li>
+                    <li>​3- Confira o endereço de destino.
+                    <TutorialImage path="app_transport/app_transport3.webp" alt="" />
+                    </li>
+                    <li>​4- Confira o preço estimado da viagem.
+                    <TutorialImage path="app_transport/app_transport4.webp" alt="" />
+                    </li>
+                    <li>5-​ Escolha a forma de pagamento.
+                    <TutorialImage path="app_transport/app_transport5.webp" alt="" />
+                    </li>
+                    <li>​6- Confirme a solicitação.
+                    <TutorialImage path="app_transport/app_transport6.webp" alt="" />
+                    </li>
+                    <li>7- ​Confira nome, foto e placa do motorista antes de entrar.
+                    <TutorialImage path="app_transport/app_transport7.webp" alt="" />
+                    </li>
+                </ul>
+                <h4>Importante: Nunca entre em um carro sem conferir se as informações do motorista e do
+                    veículo correspondem às mostradas no aplicativo.<br/>
+                    Se tiver qualquer dúvida, entre em contato com o suporte do Aplicativo.
+                </h4>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial6">Tutorial 6: Como identificar uma mensagem suspeita</h3>
+                <div>Objetivo: Evitar golpes pela internet.<br />
+                <ul>
+                    <li>1- Leia a mensagem com calma.
+                    <TutorialImage path="mensagem_suspeita/pesquisa1.webp" alt="" /></li>
+                    <li>2- Veja quem enviou.
+                    <TutorialImage path="mensagem_suspeita/pesquisa2.webp" alt="" /></li>
+                    <li>3- Desconfie de mensagens que dizem "URGENTE!" ou ameaçam bloquear sua conta.
+                    <TutorialImage path="mensagem_suspeita/pesquisa3.webp" alt="" /></li>
+                    <li>4- Não clique imediatamente em links desconhecidos.
+                    <TutorialImage path="mensagem_suspeita/pesquisa4.webp" alt="" /></li>
+                    <li>5- Não informe senhas ou códigos recebidos por SMS.
+                    <TutorialImage path="mensagem_suspeita/pesquisa5.webp" alt="" /></li>
+                    <li>6- Se estiver em dúvida, confirme a informação diretamente com a empresa ou pessoa.
+                    <TutorialImage path="mensagem_suspeita/pesquisa6.webp" alt="" /></li>
+                </ul>
+                <h4>Dica de ouro: Se alguém pedir seu código de WhatsApp, senha bancária ou código de
+                    segurança, não envie.</h4>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial7">Tutorial 7: Envio de arquivos pelo WhatsApp</h3>
+                <div>Objetivo: Enviar fotos, arquivos e mídia pelo WhatsApp<br />
+                <ul>
+                      <li>1. Abra o aplicativo “WhatsApp”
+                        <TutorialImage path="enviar_arquivo_zap/enviarzap1.svg" alt="icone do app na tela" />
+                    </li>
+                    <li>2. Abra a conversa da pessoa
+                        <TutorialImage path="enviar_arquivo_zap/enviarzap2.svg" alt="area de conversa do app" />
+                    </li>
+                    <li>3. Toque no ícone de anexar(pode ser um simbolo de um clip ou sinal de +)
+                        <TutorialImage path="enviar_arquivo_zap/enviarzap3.svg" alt="indicação onde clicar" />
+                    </li>
+                    <li>4. Escolha a imagem na GALERIA
+                        <TutorialImage path="enviar_arquivo_zap/enviarzap4.svg" alt="galeria de fotos do celular" />
+                    </li>
+                    <li>5. Toque em enviar
+                        <TutorialImage path="enviar_arquivo_zap/enviarzap5.svg" alt="indicaçaõ do botão enviar" />
+                    </li>
+                </ul>
+                <ul>
+                    <li><TutorialImage path="enviar_arquivo_zap/enviarzap6.svg" alt="dicas" /></li>
+                    <li><TutorialImage path="enviar_arquivo_zap/enviarzap7.svg" alt="dicas" /></li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial8">Tutorial 8: Como encontrar uma localização no google maps</h3>
+                <div>Objetivo: Se localizar e buscar as informações de ruas e bairros<br />
+                <ul>
+                    <li>1- Abra o Google Maps
+                    <TutorialImage path="pesquisa_maps/pesquisa_local1.webp" alt="" />
+                    </li>
+                    <li>2- Toque na barra de pesquisa
+                    <TutorialImage path="pesquisa_maps/pesquisa_local2.webp" alt="" />
+                    </li>
+                    <li>3- Digite o endereço ou nome do lugar
+                    <TutorialImage path="pesquisa_maps/pesquisa_local3.webp" alt="" />
+                    </li>
+                    <li>4- O local aparecerá para você
+                    <TutorialImage path="pesquisa_maps/pesquisa_local4.webp" alt="" />
+                    </li>
+                    <li>5- Toque em ROTAS para descobrir onde chegar
+                    <TutorialImage path="pesquisa_maps/pesquisa_local5.webp" alt="" />
+                    </li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial9">Tutorial 9: Como adicionar um contato pelo celular</h3>
+                <div>Objetivo: Salvar contato no seu dispositivo<br />
+                <ul>
+                    <li>1- Abra o aplicativo Contatos
+                    <TutorialImage path="add_contato_phone/contato_phone1.webp" alt="" />
+                    </li>
+                    <li>2- Clique no +
+                    <TutorialImage path="add_contato_phone/contato_phone2.webp" alt="" />
+                    </li>
+                    <li>3- Digite o nome da pessoa
+                    <TutorialImage path="add_contato_phone/contato_phone3.webp" alt="" />
+                    </li>
+                    <li>4- Digite o número do telefone
+                    <TutorialImage path="add_contato_phone/contato_phone4.webp" alt="" />
+                    </li>
+                    <li>5- Toque em “salvar”
+                    <TutorialImage path="add_contato_phone/contato_phone5.webp" alt="" />
+                    </li>
+                    <li>6- O contato será adicionado ao seu celular
+                    <TutorialImage path="add_contato_phone/contato_phone6.webp" alt="" />
+                    </li>
+                </ul>
+                <h4> Dica: Mantenha seus contatos sempre atualizados. Assim, você encontra as pessoas com mais facilidade.<br/>
+                Lembre-se: Não compartilhe seus contatos com desconhecidos.
+                </h4>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial10">Tutorial 10: Como enviar um e-mail</h3>
+                <div>Objetivo: Criar digitalmente um e-mail<br />
+                <ul>
+                    <li>1- Abra o seu aplicativo de e-mail</li>
+                    <li>2- Toque em “escrever”, novo email</li>
+                    <li>3- Escreva o assunto</li>
+                    <li>4- Digite sua mensagem</li>
+                    <li>5- Se precisar, adicione foto ou documento</li>
+                    <li>6- Confira tudo</li>
+                    <li>7- Toque em enviar</li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial11">Tutorial 11: Como aumentar o volume do seu celular</h3>
+                <div>Objetivo: Utilizar o botão para controlar o volume do celular<br />
+                <ul>
+                    <li>1- Localize o botão de aumentar o volume na lateral do dispositivo</li>
+                    <li>2- Aperte no botão superior “+”</li>
+                    <li>3- Continue apertando até chegar ao volume desejado</li>
+                    <li>4- Faça um teste reproduzindo um audio ou video</li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial12">Tutorial 12: Como assistir um vídeo no YouTube</h3>
+                <div>Objetivo: Assistir vídeos de forma dinâmica na internet<br />
+                <ul>
+                    <li>1- Abra o aplicativo YouTube</li>
+                    <li>2- Clique na LUPA</li>
+                    <li>3- Digite o que você deseja assistir</li>
+                    <li>4- Clique no seu video favorito</li>
+                    <li>5- Controle o áudio de sua preferência</li>
+
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial13">Tutorial 13: Como apagar uma mensagem no WhatsApp</h3>
+                <div>Objetivo: Apagar mensagens enviadas ou recebidas no WhatsApp<br />
+                <ul>
+                    <li>1- Abra a conversa</li>
+                    <li>2- Encontre a mensagem</li>
+                    <li>3- Pressione a mensagem com o seu dedo</li>
+                    <li>4- Toque no ícone da lixeira</li>
+                    <li>5- Escolha a opção “Apagar para Todos”</li>
+                    <li>6- Confirme</li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial14">Tutorial 14: Como instalar um aplicativo</h3>
+                <div>Objetivo: Instalar novos aplicativos no dispositivo<br />
+                <ul>
+                    <li>1- Abra a loja de aplicativos (Google Play Store ou App Store)</li>
+                    <li>2- Toque na barra de pesquisa</li>
+                    <li>3- Digite o nome do aplicativo</li>
+                    <li>4- Confirme se é aplicativo correto</li>
+                    <li>5- Toque em INSTALAR ou OBTER</li>
+                    <li>6- Aguarde o download</li>
+                    <li>7- O aplicativo foi atualizado com sucesso</li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial15">Tutorial 15: Como atualizar um aplicativo</h3>
+                <div>Objetivo: Atualizar aplicativos instalados no dispositivo<br />
+                <ul>
+                    <li>1- Abra a loja de aplicativos (Google Play Store ou App Store)</li>
+                    <li>2- Navegue até a seção "Atualizações"</li>
+                    <li>3- Selecione o aplicativo que deseja atualizar</li>
+                    <li>4- Clique em "Atualizar"</li>
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial16">Tutorial 16: Como carregar o seu celular</h3>
+                <div>Objetivo: Carregar o celular<br />
+                <ul>
+                    <li>1- Pegue o carregador</li>
+                    <li>2- Conecte o carregador à tomada</li>
+                    <li>3- Conecte o carregador no seu celular</li>
+                    <li>4- Verifique o se o icone de carregamento apareceu</li>
+                    <li>5- Quando se estiver carregando, NÃO retire da tomada</li>
+
+                </ul>
+                </div>
+            </article>
+
+            <article className="card">
+                <h3 id="tutorial17">Tutorial 17: Como fazer uma ligação</h3>
+                <div>Objetivo: Fazer uma ligação<br />
+                <ul>
+                    <li>1- Abra o aplicativo do Telefone</li>
+                    <li>2- Toque em contatos</li>
+                    <li>3- Procure o nome das pessoas</li>
+                    <li>4- Toque no nome da dele</li>
+                    <li>5- Toque no símbolo de telefone</li>
+                    <li>6- Espere a pessoa atender a sua chamada</li>
+                    <li>7- Para desligar, aperte o botão vermelho</li>
+
+                </ul>
+                </div>
+            </article>
+        
+        </section>
+            </main>
+            <footer className="list-footer">- &copy; Bit-X. Todos os direitos reservados -</footer>
+        </div>
+    );
+}
+
+export default Tutoriais;

@@ -1,0 +1,378 @@
+import './Curso.css';
+import { useEffect } from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { aulas } from './conteudos';
+import BluetoothIcon from '../assets/icons/icone_bluetooth.svg';
+import SettingsIcon from '../assets/icons/icone_configuracao.svg';
+import DownloadIcon from '../assets/icons/icone_download.svg';
+import HomeIcon from '../assets/icons/icone_home.svg';
+import DeleteIcon from '../assets/icons/icone_lixeira.svg';
+import SearchIcon from '../assets/icons/icone_lupa.svg';
+import MenuIcon from '../assets/icons/icone_menu.svg';
+import CloudIcon from '../assets/icons/icone_nuvem.svg';
+import PlayIcon from '../assets/icons/icone_play.svg';
+import WifiIcon from '../assets/icons/icone_wifi.svg';
+import AirplaneIcon from '../assets/icons/modo_aviao.png';
+import MouseImage from '../assets/infobasic/mouse_500px.webp';
+import KeyboardImage from '../assets/infobasic/teclado_500px.webp';
+import MonitorImage from '../assets/infobasic/monito_500px.webp';
+import CaseImage from '../assets/infobasic/gabinet_500px.webp';
+import FlashDriveImage from '../assets/infobasic/pendrive_500px.webp';
+import MousepadImage from '../assets/infobasic/mousepad_500px.webp';
+import ExternalDriveImage from '../assets/infobasic/HDExterno.png';
+import RouterImage from '../assets/infobasic/Roteador.png';
+import NetworkCableImage from '../assets/infobasic/CaboRede.png';
+import UsbCableImage from '../assets/infobasic/CaboUSB.png';
+
+function CursoLetramento() {
+    const { aulaId } = useParams();
+    const aula = aulas[Number(aulaId) - 1];
+    const targetId = aulaId === '13' ? 'info_basic' : `aula${aulaId}`;
+
+    useEffect(() => {
+        if (!aula) {
+            return;
+        }
+
+        document.getElementById(targetId)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    }, [aula, targetId]);
+
+    if (!aula) {
+        return <Navigate to="/cursos" replace />;
+    }
+
+    return (
+        <div className="list-page">
+            <header className="list-header">
+                <Link to="/cursos" className="back-link">Voltar às aulas</Link>
+                <h1>Curso Letramento Digital</h1>
+            </header>
+            <main className="list-main">
+                <section className="lesson-detail">
+                    <h2>{aula}</h2>
+                    <section className="cards card_aula">
+
+            <div className="card">
+                <h2 id="aula1">Símbolos ou Ícones</h2>
+                <p>Um ícone ou símbolo no celular e no computador é como uma placa de trânsito: um desenho simples que
+                    serve para te guiar e mostrar o caminho.
+                    Assim como você olha para o desenho de um talher na estrada e já sabe que ali tem um restaurante, no
+                    mundo digital você olha para um desenho na tela e já sabe o que ele faz, sem precisar ler nada. Eles
+                    foram inventados para facilitar a sua vida, funcionando como botões que te levam direto para onde
+                    você quer ir.
+                    Para ajudar você a navegar sem medo, preparamos uma lista com os símbolos mais comuns e o que cada
+                    um significa:</p>
+
+            </div>
+
+            <div className="card">
+                <h2 id="aula2">Símbolo de rede wi-fi </h2>
+                <img className="icones" src={WifiIcon} alt="Ícone de rede Wi-Fi" />
+                <p>Descrição:
+                    Representa a conexão da sua internet sem fio. Quanto mais barrinhas estiverem acesas, mais forte é o
+                    sinal da sua internet.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula3">Símbolo de pesquisa </h2>
+                <img className="icones" src={SearchIcon} alt="Ícone de pesquisa" />
+                
+                <p>Descrição:
+                    Encontrar Informações: Ele indica o local onde você pode digitar palavras-chave para encontrar
+                    produtos, textos, configurações ou arquivos em um site ou aplicativo.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula4">Símbolo de play</h2>
+                <img className="icones" src={PlayIcon} alt="Ícone de reprodução" />
+                <p>Iniciar Reprodução: É o botão que você aperta para dar início a um vídeo, música, podcast ou comando
+                    de voz.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula5">Símbolo de configurações</h2>
+                <img className="icones" src={SettingsIcon} alt="Ícone de configurações" />
+                <p>Descrição:
+                    A engrenagem simboliza configurações, ajustes e controle de funções no mundo digital. É amplamente
+                    usada para representar personalização e gerenciamento de sistemas.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula6">Símbolo de download</h2>
+                <img className="icones" src={DownloadIcon} alt="Ícone de download" />
+                <p>Descrição:
+                    O símbolo de download representa o ato de baixar ou salvar algo da internet no seu computador,
+                    celular ou outro dispositivo.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula7">Símbolo de Nuvem</h2>
+                <img className="icones" src={CloudIcon} alt="Ícone de nuvem" />
+                <p>Descrição:
+                    Este símbolo representa um lugar na internet onde seus arquivos e informações podem ser guardados e
+                    acessados de diferentes dispositivos.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula8">Símbolo de Bluetooth</h2>
+                <img className="icones" src={BluetoothIcon} alt="Ícone de Bluetooth" />
+                <p>Descrição:
+                    Este símbolo indica uma conexão sem fio que permite conectar aparelhos próximos, como celular, fones
+                    de ouvido, caixas de som e outros dispositivos.
+
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula9">Símbolo de Menu</h2>
+                <img className="icones" src={MenuIcon} alt="Ícone de menu" />
+                <p>Descrição:
+                    Este símbolo abre um menu com várias opções e funções disponíveis no aplicativo ou site.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula10"> Símbolo de Home</h2>
+                <img className="icones" src={HomeIcon} alt="Ícone de início" />
+                <p>Descrição:
+                    Este símbolo representa a página principal de um aplicativo ou site. Ao tocar nele, você geralmente
+                    volta para o início, onde pode encontrar as principais opções e informações.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula11">Símbolo de Lixeira</h2>
+                <img className="icones" src={DeleteIcon} alt="Ícone de lixeira" />
+                <p>Descrição:
+                    Este símbolo representa a opção de excluir algo, como uma foto, mensagem ou arquivo. Ao tocar nele,
+                    o item escolhido pode ser apagado do aparelho ou aplicativo.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula12">Simbolo de Modo avião</h2>
+                <img className="icones" src={AirplaneIcon} alt="Ícone de modo avião" />
+                <p>Descrição: Este símbolo ativa ou desativa o modo avião do celular. Quando ativado, ele desliga as conexões de rede móvel e pode desativar outras conexões sem fio, como o Wi-Fi e o Bluetooth. Em muitos celulares, é possível ligar o Wi-Fi e o Bluetooth novamente mesmo com o modo avião ativado.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="info_basic">Informática básica</h2>
+                <p>Neste curso, você vai aprender sobre os principais elementos que fazem parte do mundo da informática,
+                    como o mouse, o teclado, os navegadores e os sistemas operacionais. Tudo isso de forma simples,
+                    prática e acessível, para que você possa compreender melhor como os computadores e outros
+                    dispositivos digitais funcionam.<br />
+                    Nunca é tarde para aprender! Nosso objetivo é ajudar você a desenvolver mais confiança e
+                    independência no uso da tecnologia, tornando suas atividades digitais mais fáceis e seguras no dia a
+                    dia. Vamos aprender juntos, passo a passo, respeitando seu ritmo e suas descobertas!
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula14">O que é um mouse e para que ele serve?</h2>
+                <img className="info_basic" src={MouseImage} alt="Mouse de computador" />
+                <p>O mouse é um acessório do computador que permite controlar a setinha que aparece na tela. Com ele,
+                    você pode selecionar opções, abrir programas, clicar em botões, acessar sites e realizar diversas
+                    tarefas. Ele funciona como uma ferramenta que ajuda você a interagir com o computador de maneira
+                    simples e prática.</p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula15">O que é um teclado e para que ele serve?</h2>
+                <img className="info_basic" src={KeyboardImage} alt="Teclado de computador" />
+                <p>
+                    O teclado é um acessório do computador que permite escrever letras, números e símbolos. Com ele,
+                    você
+                    pode digitar mensagens, preencher formulários, pesquisar informações na internet e escrever textos.
+                    Ele possui várias teclas, cada uma com uma função, que ajudam você a se comunicar e realizar
+                    diferentes atividades no computador.<br />
+                    Como usar o teclado?<br />
+                    Para usar o teclado, coloque-o sobre uma superfície firme e confortável. Pressione as teclas com os
+                    dedos para digitar o que deseja. As teclas com letras servem para escrever palavras, as teclas com
+                    números servem para digitar números e a tecla Espaço cria um espaço entre as palavras. A tecla Enter
+                    permite confirmar uma ação ou pular para a próxima linha, enquanto a tecla Backspace apaga o
+                    caractere que está antes do cursor. Você não precisa decorar todas as teclas de uma vez: comece
+                    escrevendo palavras simples e pequenas frases, praticando no seu próprio ritmo.
+                    Dica: tenha paciência consigo mesmo! Com a prática, você vai reconhecer as teclas e ganhar mais
+                    confiança para escrever mensagens, pesquisar na internet e utilizar o computador no dia a dia.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula16">O que é um monitor e para que ele serve?</h2>
+                <img className="info_basic" src={MonitorImage} alt="Monitor de computador" />
+                <p>
+                    O monitor é a tela do computador, parecida com uma televisão. É nele que você consegue ver as
+                    imagens, os textos, os vídeos, os programas e as páginas da internet. Ele permite acompanhar tudo o
+                    que você está fazendo no computador, como ler notícias, assistir a vídeos, escrever documentos e
+                    conversar com outras pessoas.<br />
+                    Como usar o monitor?<br />
+                    Para usar o monitor, primeiro verifique se ele está conectado à energia e ao computador. Depois,
+                    ligue-o pelo botão de ligar, caso ele ainda esteja desligado. A imagem do computador aparecerá na
+                    tela, permitindo que você veja as informações e acompanhe suas atividades. Para interagir com o que
+                    aparece no monitor, você pode utilizar o mouse para clicar nas opções e o teclado para escrever.
+                    Lembre-se: o monitor serve principalmente para mostrar as informações; quem permite controlar o
+                    computador são dispositivos como o mouse e o teclado.
+                    Dica: ajuste a posição do monitor para enxergar a tela confortavelmente e, se necessário, aumente o
+                    tamanho das letras nas configurações do computador para facilitar a leitura.
+                </p>
+            </div>
+
+
+            <div className="card">
+                <h2 id="aula17">O que é um gabinete de computador e para que ele serve?</h2>
+                <img className="info_basic" src={CaseImage} alt="Gabinete de computador" />
+                <p>
+                    O gabinete é a caixa que abriga as principais peças responsáveis pelo funcionamento do computador.
+                    Dentro dele ficam componentes importantes, como o processador, a memória e o armazenamento, que
+                    ajudam o computador a executar programas, guardar arquivos e realizar tarefas. Na parte da frente,
+                    geralmente encontramos o botão de ligar e entradas USB, que permitem conectar dispositivos, como
+                    pendrives.
+                    <br />
+                    Como usar o gabinete?<br />
+                    Para usar o computador, primeiro verifique se o gabinete está conectado à tomada e ao monitor.
+                    Depois, pressione o botão de ligar, geralmente identificado pelo símbolo de energia (⏻). Aguarde
+                    alguns instantes até o computador iniciar e a imagem aparecer no monitor. Em seguida, você poderá
+                    utilizar o mouse e o teclado para realizar suas atividades.
+                    As entradas USB do gabinete também podem ser usadas para conectar acessórios, como pendrives,
+                    teclados e mouses. É importante manter o gabinete em um local firme, ventilado e sem bloquear as
+                    aberturas de circulação de ar. Atenção: não é necessário abrir o gabinete para usar o computador. As
+                    peças internas devem ser manuseadas apenas por pessoas que saibam fazer isso com segurança.
+                    Dica: lembre-se de que o gabinete não é o computador inteiro, mas a estrutura que protege muitas das
+                    peças responsáveis pelo seu funcionamento. O monitor mostra as informações, enquanto o mouse e o
+                    teclado ajudam você a interagir com elas.
+
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula18">O que é um pendrive e para que ele serve?</h2>
+                <img className="info_basic" src={FlashDriveImage} alt="Pendrive" />
+                <p>
+                    O pendrive é um pequeno dispositivo portátil usado para guardar e transportar arquivos digitais,
+                    como fotos, vídeos, músicas e documentos. Ele funciona como uma espécie de bolso para os seus
+                    arquivos, permitindo que você leve suas informações de um computador para outro com facilidade.
+                    Existem pendrives de diferentes formatos, cores e capacidades de armazenamento.
+                    <br />
+                    Como usar um pendrive?<br />
+                    Para usar o pendrive, conecte a ponta metálica dele a uma entrada USB do computador. Aguarde alguns
+                    instantes e, na maioria dos casos, ele aparecerá na tela como uma unidade de armazenamento. Com o
+                    mouse, você poderá abrir essa unidade, visualizar os arquivos guardados e copiar documentos do
+                    computador para o pendrive ou do pendrive para o computador.
+                    Quando terminar de usá-lo, tirar o pendrive com segurança pela opção correspondente no computador
+                    antes de retirá-lo da entrada USB. Isso ajuda a evitar problemas com os arquivos. Também é
+                    importante guardar o dispositivo em um local seguro para não perdê-lo.
+
+                    Dica: o pendrive é muito útil para fazer cópias de documentos importantes, transportar fotos e
+                    compartilhar arquivos. Porém, lembre-se de que ele pode ser perdido ou danificado, então mantenha
+                    outra cópia dos arquivos importantes em um local seguro.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula19">O que é um mouse pad e para que ele serve?</h2>
+                <img className="info_basic" src={MousepadImage} alt="Mouse pad" />
+                <p>
+                    O mouse pad é uma pequena superfície, geralmente feita de tecido ou borracha, colocada sobre a mesa
+                    para apoiar e movimentar o mouse. Ele serve para facilitar os movimentos do mouse, permitindo que a
+                    setinha na tela se movimente com mais precisão e facilidade. Além disso, ajuda a proteger o mouse e
+                    a superfície da mesa contra riscos e sujeira.
+                    <br />
+                    Como usar o mouse pad?<br />
+                    Para usar o mouse pad, coloque-o sobre uma superfície plana, como uma mesa, com o lado mais macio
+                    virado para cima. Depois, posicione o mouse em cima dele e movimente-o normalmente com a mão. Você
+                    pode deslizar o mouse para os lados, para frente e para trás, fazendo com que a setinha acompanhe os
+                    movimentos na tela do computador.
+                    Não é necessário conectar o mouse pad ao computador, pois ele não utiliza fios nem energia elétrica.
+                    Basta colocá-lo na mesa e começar a usar!
+                    Dica: procure manter o mouse pad limpo e evite molhá-lo. Assim, ele continuará ajudando você a
+                    movimentar o mouse com conforto e facilidade.
+                </p>
+            </div>
+
+            <div className="card">
+                <h2 id="aula20">O que é um HD externo e para que ele serve?</h2>
+                <img className="info_basic" src={ExternalDriveImage} alt="Disco rígido externo" />
+                <p>
+                    O HD externo (Disco Rígido Externo) é um dispositivo utilizado para armazenar arquivos digitais, como fotos, vídeos, músicas e documentos. Ele funciona como um espaço extra para guardar informações, parecido com um armário onde você pode organizar e guardar seus pertences.
+                    <br />
+                    Uma das principais vantagens do HD externo é que ele permite guardar grandes quantidades de arquivos fora do computador, ajudando a liberar espaço no armazenamento interno. Além disso, você pode transportá-lo e conectar a outros computadores para acessar seus arquivos.<br/>
+                    Como usar um HD externo?<br/>
+                    Para utilizar um HD externo, conecte o cabo USB do dispositivo a uma entrada USB do computador. Aguarde alguns instantes até que ele seja reconhecido pelo sistema. Depois, abra a pasta "Este Computador" (no Windows) e procure pelo nome do dispositivo. Clique duas vezes sobre ele para visualizar os arquivos armazenados.
+                    Com o mouse, você poderá copiar fotos, vídeos e documentos do computador para o HD externo ou transferir arquivos dele para o computador. Quando terminar de utilizá-lo, lembre-se de clicar na opção "Ejetar" antes de desconectar o cabo, evitando possíveis problemas com seus arquivos.
+                    Dica: o HD externo é muito útil para guardar cópias de segurança de documentos, fotos e arquivos importantes. Procure mantê-lo em um local seguro, protegido contra quedas, umidade e calor excessivo
+                </p>          
+            </div>
+
+             <div className="card">
+                <h2 id="aula21">O que é um roteador/modem e para que ele serve?</h2>
+                <img className="info_basic" src={RouterImage} alt="Roteador de internet" />
+                <div>
+                    O roteador é um aparelho responsável por distribuir a conexão de internet para diferentes dispositivos, como computadores, celulares, tablets e televisões. Ele permite que vários aparelhos se conectem à internet ao mesmo tempo, principalmente por meio do Wi-Fi (internet sem fio).
+                    <br />
+                    O modem é o equipamento responsável por receber o sinal de internet fornecido pela operadora e disponibilizá-lo para a sua casa. Em muitos casos, modem e roteador estão juntos em um único aparelho, realizando as duas funções. É por meio desses equipamentos que conseguimos acessar sites, assistir a vídeos, enviar mensagens e utilizar diversos serviços da internet.
+                    <br />
+                    Como usar um roteador/modem?<br/>
+                    Para utilizar um roteador/modem, primeiro ele precisa estar conectado à energia elétrica e ao cabo de internet fornecido pela operadora. Depois de ligado, aguarde alguns instantes até que as luzes indicadoras mostrem que a conexão está funcionando.
+                    <div>Para conectar um celular ou computador ao Wi-Fi, siga estes passos:<br /><br />
+                    1-Abra as configurações de Wi-Fi do seu dispositivo.<br/>
+                    2-Procure pelo nome da sua rede de internet.<br/>
+                    3-Selecione a rede desejada.<br/>
+                    4-Digite a senha do Wi-Fi, caso seja solicitada.<br/>
+                    5-Clique em Conectar e aguarde alguns instantes.<br/><br />
+                    Se tudo estiver funcionando corretamente, seu dispositivo estará conectado à internet!<br />
+                    Dica: procure deixar o roteador em um local aberto, elevado e sem muitos obstáculos ao redor, para ajudar a distribuir melhor o sinal Wi-Fi. Também evite compartilhar sua senha com desconhecidos e não aperte botões do aparelho sem saber para que servem.
+                    </div>
+                </div>          
+            </div>
+
+             <div className="card">
+                <h2 id="aula22">O que é um cabo de rede e para que ele serve?</h2>
+                <img className="info_basic" src={NetworkCableImage} alt="Cabo de rede" />
+                <p>
+                    O cabo de rede, também conhecido como cabo Ethernet, é um fio utilizado para conectar computadores, roteadores, modems e outros dispositivos à internet ou a uma rede local. Ele permite que os aparelhos troquem informações e tenham acesso à internet por meio de uma conexão com fio.
+                    <br />
+                    Uma das principais vantagens do cabo de rede é oferecer uma conexão geralmente mais estável e menos sujeita a interferências do que o Wi-Fi. Ele é muito utilizado em computadores de mesa, videogames, televisões e outros equipamentos que precisam de uma conexão confiável.
+                    <br />
+                    Como usar um cabo de rede?<br/>
+                    Para utilizar um cabo de rede, procure a entrada específica chamada Ethernet ou LAN, que geralmente fica na parte traseira do computador, do roteador ou do modem. Depois, conecte uma ponta do cabo à entrada do roteador ou modem e a outra ponta à entrada de rede do computador.
+                    <br />Após conectar as duas pontas, aguarde alguns instantes para que o computador reconheça a conexão. Se o roteador e a internet estiverem funcionando corretamente, o dispositivo poderá acessar a internet automaticamente, sem precisar digitar uma senha de Wi-Fi.<br/>
+                    Dica: certifique-se de que as pontas do cabo estejam bem encaixadas e evite dobrá-lo ou puxá-lo com força. Lembre-se de que o cabo de rede é uma alternativa ao Wi-Fi, permitindo conectar aparelhos à internet por meio de fios.
+                    
+                </p>          
+            </div>
+
+            <div className="card">
+                <h2 id="aula23">O que é uma entrada USB e para que ela serve?</h2>
+                <img className="info_basic" src={UsbCableImage} alt="Cabo USB" />
+                <p>
+                    O cabo USB é um acessório utilizado para conectar diferentes dispositivos ao computador, como pendrives, mouses, teclados, celulares, impressoras e HDs externos. Ele permite transferir arquivos, trocar informações entre aparelhos e, em alguns casos, fornecer energia para carregar dispositivos.
+                    <br />
+                    A ponta USB mais comum é chamada de USB-A, geralmente possui um formato retangular e pode ser encontrada em computadores, notebooks e outros equipamentos. Existem também outros tipos de conectores, como USB-C e Micro-USB, que possuem formatos diferentes.
+                    <br />
+                    Como usar um cabo USB?<br/>
+                    Para utilizar um cabo USB, primeiro identifique a entrada correspondente no computador ou no dispositivo que deseja conectar. Depois, encaixe cuidadosamente o conector USB na entrada, sem forçar. Quando a conexão for reconhecida, o computador poderá identificar o dispositivo conectado.
+                    <br />Por exemplo, ao conectar um pendrive pela entrada USB, você poderá acessar seus arquivos pelo computador. Já ao conectar um celular com um cabo compatível, poderá transferir fotos, vídeos e outros documentos.<br/>
+                    Dica: sempre verifique se o conector está na posição correta antes de encaixá-lo. Nunca force a entrada e, quando terminar de utilizar um dispositivo de armazenamento, lembre-se de ejetá-lo com segurança antes de desconectá-lo.
+                    
+                </p>          
+            </div>
+
+        </section>
+                </section>
+            </main>
+            <footer className="list-footer">- &copy; Bit-X. Todos os direitos reservados -</footer>
+        </div>
+    );
+}
+
+export default CursoLetramento;
